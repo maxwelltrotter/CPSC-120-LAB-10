@@ -2,15 +2,18 @@
 #include "ray.h"
 
 Point3 Ray::origin() const { 
-  // TODO: Complete this method
+  // Complete this method
+  return origin_;
 }
 
 Vec3 Ray::direction() const {
-  // TODO: Complete this method
+  // Complete this method
+  return direction_;
 }
 
 Point3 Ray::at(double t) const {
-  // TODO: Complete this method
+  // Complete this method
+  return origin_ + (t * direction_);
 }
 
 std::ostream& operator<<(std::ostream& out, const Ray& r) {

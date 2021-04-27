@@ -15,7 +15,7 @@ using namespace std;
 /// RayColor computes the color the ray \p r sees through the camera lens.
 /// Given a Ray \p r, calculate the color that is visible to the ray.
 /// In this iteration, the ray can only see the sky. The color of the sky
-/// smoothly changes between the \c sky_top color and the \c sky_bttom color.
+/// smoothly changes between the \c sky_top color and the \c sky_bottom color.
 /// As the names suggest, \c sky_top is the color of the sky at the top of
 /// the image and \c sky_bottom is the color of the sky at the bottom of
 /// the image.
@@ -24,9 +24,13 @@ using namespace std;
 /// \returns The color visible from that ray
 Color RayColor(const Ray& r) {
   Color c;
-  Color sky_top;
-  Color sky_bottom;
-  // TODO: Complete this function
+  Color sky_top{0.4980392156862745, 0.7450980392156863, 0.9215686274509803};
+  Color sky_bottom{0.9, 0.2, 0.2};
+  // Change to sky colours
+  // Complete this function
+  Vec3 unit_direction = UnitVector(r.direction());
+  double t = 0.5 * (unit_direction.y() + 1.0);
+  c = (1.0 - t) *sky_bottom + t * sky_top;
   return c;
 }
 
@@ -119,6 +123,7 @@ int main(int argc, char const* argv[]) {
   // all the rays that emanate out from the viewplane.
   const Vec3 kLowerLeftCorner =
       kOrigin - kHorizontal / 2 - kVertical / 2 - Vec3(0, 0, kFocalLength);
+      // Duh! Downwards and left by half the image length and width.
 
   /// Rendering the image in main
   /// Using nested loops, start from the top row of the viewplane and
@@ -142,16 +147,21 @@ int main(int argc, char const* argv[]) {
       //          column = image.width() - 1 then
       //          colum / (image.width() - 1) -> 1.0
       // The same is true for v
-      // TODO: Calculate u
+
+      // Calculate u
       double u = 0.0;
-      // TODO: Calculate v
+      u = double(column) / double(image.width() - 1);
+      // Calculate v
       double v = 0.0;
+      v = double(row) / double(image.height() - 1);
+
+
       // Create a ray that starts at the camera's center, the origin, and
       // travels through the pixel center defined by
       // kLowerLeftCorner + u * kHorizontal + v * kVertical - kOrigin
-      // TODO: Create a ray that starts at the origin and passes through
+      // Create a ray that starts at the origin and passes through
       // current pixel center.
-      Ray r{kOrigin, kOrigin};
+      Ray r{kOrigin, (kLowerLeftCorner + u * kHorizontal + v * kVertical) - kOrigin} ;
       // Calculate and return the color at the pixel that Ray r
       // points through.
       Color pixel_color = RayColor(r);
