@@ -1,4 +1,14 @@
 
+// Maxwell Trotter
+// CPSC 120-02
+// 2021-04-26
+// Max_Trotter@csu.fullerton.edu
+// @maxwelltrotter
+// 
+// Lab 10-01
+//
+// This program draws a sky image using raytracers and a pair of loops!
+
 #include <chrono>
 #include <cmath>
 #include <iostream>
